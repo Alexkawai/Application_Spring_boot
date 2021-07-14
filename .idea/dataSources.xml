@@ -8,12 +8,5 @@
       <jdbc-url>jdbc:mysql://localhost:3306/mybd</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="MySQL" uuid="294dd22d-e456-4a37-800c-dce45de3b388">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/mybd?verifyServerCertificate=false&amp;useSSL=false&amp;requireSSL=false&amp;useLegacyDatetimeCode=false&amp;amp&amp;serverTimezone=UTC</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>

@@ -1,9 +1,6 @@
 package web.dao;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
@@ -17,7 +14,6 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 @Repository
-
 public class Dao {
 
     private LocalContainerEntityManagerFactoryBean lcemfb;

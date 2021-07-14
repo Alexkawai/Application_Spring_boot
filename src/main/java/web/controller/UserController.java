@@ -5,45 +5,45 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import web.dao.Dao;
 import web.model.User;
+import web.service.ServiceInterface;
 
 import java.util.List;
 
 @Controller
 public class UserController {
 
-    Dao dao;
+    ServiceInterface service;
     @Autowired
-    public void setDao(Dao dao) {
-        this.dao = dao;
+    public void setDao(ServiceInterface service) {
+        this.service = service;
     }
 
     @GetMapping(value = "/")
     public String printUser(ModelMap model) {
-        List<User> users= dao.allUsers();
+        List<User> users= service.allUsers();
         model.addAttribute("users", users);
         return "index";
     }
 
     @GetMapping(value = "/edit/{id}")
     public String editUser(@PathVariable("id") long id, ModelMap model) {
-        User user = dao.getById(id);
+        User user = service.getById(id);
         model.addAttribute("user", user);
         return "edit";
     }
     @PostMapping(value = "/edit")
     public String edit( User user) {
-        dao.edit(user);
+        service.edit(user);
         return "redirect:/";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, ModelMap model) {
-        dao.delete(id);
+        service.delete(id);
         return "redirect:/";
     }
 
@@ -54,7 +54,7 @@ public class UserController {
     }
     @PostMapping(value = "/add")
     public String create( User user) {
-        dao.save(user);
+        service.save(user);
         return "redirect:/";
     }
 }
