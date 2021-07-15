@@ -5,16 +5,26 @@
     <meta charset="UTF-8">
     <title>Users</title>
 </head>
-<body>
-
+<body style="padding: 10px;font-size: 20px">
+<a href="/login?logout">Log out</a>
+<br>
+<a href="/user">Current User Page</a>
 
 <h2>Users</h2>
-<table width="40%">
+<table style="  font-size: 14px;
+                width: 660px;
+                background: white;
+                text-align: left;
+                border-collapse: collapse;
+                border: #3E4347 ;
+                color: #3E4347;">
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>LastName</th>
         <th>Email</th>
+        <th>Password</th>
+        <th>Actions</th>
 
     </tr>
 
@@ -24,9 +34,10 @@
                 <td th:text="${user.getName()}"></td>
                 <td th:text="${user.getLastName()}"></td>
                 <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getPassword()}"></td>
             <td>
-                <a th:href="@{/edit/{id}(id=${user.getId()})}">edit</a>
-                <a th:href="@{/delete/{id}(id=${user.getId()})}">delete</a>
+                <a th:href="@{/admin/edit/{id}(id=${user.getId()})}">edit</a>
+                <a th:href="@{/admin/delete/{id}(id=${user.getId()})}">delete</a>
             </td>
         </tr>
 
@@ -34,7 +45,9 @@
 </table>
 
 <h2>Add</h2>
-<a href="/add">Add new User</a>
+<a href="/admin/add">Add new User</a>
+
+
 
 </body>
 </html>

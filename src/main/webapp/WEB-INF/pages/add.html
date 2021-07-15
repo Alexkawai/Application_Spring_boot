@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <title>Add User</title>
 </head>
-<body>
-<form th:method="POST" th:action="@{/add}" th:object="${user}">
+<body style="padding: 10px;font-size: 20px">
+<form th:method="POST" th:action="@{/admin/add}" th:object="${user}">
 
     <label for="name" >Enter Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
-    <br>
+    <p></p>
     <label for="lastName" >Enter Lastname: </label>
     <input type="text" th:field="*{lastName}" id="lastName"/>
-    <br>
+    <p></p>
     <label for="email" >Enter Email: </label>
     <input type="text" th:field="*{email}" id="email"/>
-    <br>
+    <p></p>
+    <label for="password" >Enter Password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <p></p>
     <input type="submit" value="Create!"/>
 </form>
-
+<br>
+<a href="/admin">Back to table</a>
 </body>
 </html>

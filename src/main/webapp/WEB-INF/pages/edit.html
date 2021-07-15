@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <title>Edit User</title>
 </head>
-<body>
+<body style="padding: 10px">
 
 <h1>Edit</h1>
 
 <br>
-<form th:method="POST" th:action="@{/edit}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/edit}" th:object="${user}">
   <label for="id" >Id: </label>
   <input readonly type="text" th:field="*{id}" id="id"/>
   <br>
@@ -23,8 +23,11 @@
   <label for="email" >Enter Email: </label>
   <input type="text" th:field="*{email}" id="email"/>
   <br>
+  <label for="password" >Enter Email: </label>
+  <input type="text" th:field="*{password}" id="password"/>
+  <br>
   <input type="submit" value="Edit!"/>
 </form>
-
+<a href="/admin">Back to table</a>
 </body>
 </html>

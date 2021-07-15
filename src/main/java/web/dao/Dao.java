@@ -3,14 +3,18 @@ package web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import web.model.Role;
 import web.model.User;
 import web.config.Util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -26,9 +30,11 @@ public class Dao {
     public void save(User user) {
         EntityManager em =  lcemfb.getObject().createEntityManager();
         em.getTransaction().begin();
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         em.merge(user);
         em.getTransaction().commit();
         em.close();
+
     }
     public User getById(Long id) {
 
@@ -64,6 +70,14 @@ public class Dao {
         em.merge(user2);
         em.getTransaction().commit();
         em.close();
+    }
+
+    public User loadUserByUsername(String email) {
+        EntityManager em = lcemfb.getObject().createEntityManager();
+        User user = em.createQuery("from User where email = :email",User.class)
+                .setParameter("email",email).getSingleResult();
+        em.close();
+        return user;
     }
 
 

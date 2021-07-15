@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tags">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>User</title>
 </head>
-<body>
-<p th:text="${user.getId()}"></p>
-<p th:text="${user.getName()}"></p>
-<p th:text="${user.getLastName()}"></p>
-<p th:text="${user.getEmail()}"></p>
+<body style="padding: 10px;font-size: 20px">
+<p>Id: <span th:text="${user.getId()}"></span></p>
+<p>Name: <span th:text="${user.getName()}"></span></p>
+<p>LastName: <span th:text="${user.getLastName()}"></span></p>
+<p>Email: <span th:text="${user.getEmail()}"></span></p>
+<p>Password: <span th:text="${user.getPassword()}"></span></p>
+<br>
+
+<a href="/login?logout">Log out</a>
 </body>
 </html>

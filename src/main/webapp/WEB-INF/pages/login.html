@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body style="padding: 10px;font-size: 20px">
+
+<div style="text-align: center;margin-top: 150px;">
+    <div th:if="${param.logout}">
+        <p class="text-warning">You have been logged out.</p>
+    </div>
+    <h2>Log in system</h2>
+    <form th:method="POST" th:action="@{/login}" >
+        <p>Enter Email:</p>
+        <input type="j_username" name="j_username"  placeholder="E-mail" required autofocus/>
+        <br>
+       <p>Enter Password:<p/>
+        <input type="j_password" name="j_password"  placeholder="Password" required />
+        <br><p>   </p>
+        <input type="submit" value="Login!"/>
+
+    </form>
+</div>
+
+</body>
+</html>
