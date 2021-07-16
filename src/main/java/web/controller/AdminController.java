@@ -3,6 +3,7 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -10,16 +11,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import web.model.User;
-import web.service.UserDetailsServiceImpl;
+import web.service.Service;
 
 import java.util.List;
 
 @Controller
 public class AdminController {
 
-    UserDetailsServiceImpl service;
+    private Service  service;
+
     @Autowired
-    public void setDao(UserDetailsServiceImpl service) {
+    public void setService(Service service) {
+
         this.service = service;
     }
 
@@ -55,36 +58,27 @@ public class AdminController {
     }
     @PostMapping(value = "/admin/add")
     public String create( User user) {
-
         service.save(user);
         return "redirect:/admin";
     }
     @GetMapping(value = "/user")
     public String takeUser(ModelMap model) {
-        UserDetails user = service.loadUserByUsername(getPrincipalName());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //UserDetails user = userDetailsService.loadUserByUsername(((User)principal).getUsername());
+        User user = service.findUserByUsername(userDetails.getUsername());
         model.addAttribute("user", user);
         return "user";
     }
     @GetMapping(value = "/login")
-    public String getLoginPage(Model model) {
-        //model.addAttribute("user",new User());
+    public String getLoginPage(User user, Model model) {
+
         return "login";
     }
 
     @PostMapping(value = "/login")
-    public String login(  Model model) {
+    public String login( ) {
 
-       //model.addAttribute("user", newUser);
         return "redirect:/user";
     }
-    public String getPrincipalName(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-             username = ((UserDetails)principal).getUsername();
-        } else {
-             username = principal.toString();
-        }
-        return username;
-    }
+
 }

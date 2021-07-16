@@ -31,15 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        // auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
     }
 
-   /* @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // http.csrf().disable(); - попробуйте выяснить сами, что это даёт
-        http.authorizeRequests()
-                .antMatchers("/login").permitAll() // доступность всем
-                .antMatchers("/user").access("hasAnyRole('ROLE_USER')") // разрешаем входить на /user пользователям с ролью User
-                .and().formLogin()  // Spring сам подставит свою логин форму
-                .successHandler(successUserHandler); // подключаем наш SuccessHandler для перенеправления по ролям
-    }*/
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
