@@ -1,39 +1,18 @@
 package web.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import web.dao.Dao;
-import web.dao.DaoImpl;
 import web.model.User;
 
 import java.util.List;
 
-@org.springframework.stereotype.Service
-public class Service {
-    private Dao dao;
-    @Autowired
-    public Service(Dao dao) {
-        this.dao = dao;
-    }
-    public User getById(Long id) {
-        return dao.getById(id);
-    }
+public interface Service {
+     User getById(Long id) ;
 
-    public List<User> allUsers() {
-        return dao.allUsers();
-    }
+     List<User> allUsers();
 
-    public void save(User user) {
-        dao.save(user);
-    }
+     void save(User user);
 
-    public void delete(Long id) {
-        dao.delete(id);
-    }
+     void delete(Long id);
 
-    public void edit(User user) {
-        dao.edit(user);
-    }
-    public User findUserByUsername(String email) {
-        return dao.findUserByUsername(email);
-    }
+     void edit(User user);
+
 }

@@ -7,46 +7,53 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+@Transactional
 @Repository
 public class DaoImpl implements Dao{
-    private EntityManagerFactory emf;
-    private EntityManager  em ;
 
-    public DaoImpl(EntityManagerFactory emf) {
-        this.emf = emf;
-        this.em = emf.createEntityManager();
-    }
+   @PersistenceContext
+   private EntityManager  em ;
 
+
+    @Override
     public void save(User user) {
         em.getTransaction().begin();
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         em.merge(user);
         em.getTransaction().commit();
     }
+    @Override
     public User getById(Long id) {
         User user = em.find(User.class, id);
         em.detach(user);
         return user;
     }
+
+    @Override
     public void delete(Long id) {
         em.getTransaction().begin();
         User user = em.find(User.class,id);
         em.remove(user);
         em.getTransaction().commit();
     }
+    @Override
     public List<User> allUsers() {
         return em.createQuery("from User",User.class).getResultList();
     }
+
+    @Override
     public void edit(User user) {
         em.getTransaction().begin();
         User user2=em.find(User.class, user.getId());
@@ -58,22 +65,13 @@ public class DaoImpl implements Dao{
         em.merge(user2);
         em.getTransaction().commit();
     }
-
-    public UserDetails loadUserByUsername(String email) {
-        User user = em.createQuery(" from User  where email = :email ",User.class)
+    @Override
+    public User loadUserByUsername(String email) {
+        User user = em.createQuery("select distinct u from User u left join fetch u.roles where u.email = :email ",User.class)
                 .setParameter("email",email).getSingleResult();
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Role role : user.getRoles()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return user;
     }
 
-    public User findUserByUsername(String email) {
-        return  em.createQuery(" from User  where email = :email ",User.class)
-                .setParameter("email",email).getSingleResult();
-
-    }
 
 
 

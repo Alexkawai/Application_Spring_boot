@@ -3,7 +3,6 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,13 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import web.model.User;
 import web.service.Service;
+import web.service.ServiceImpl;
 
 import java.util.List;
 
 @Controller
 public class AdminController {
 
-    private Service  service;
+    private Service service;
 
     @Autowired
     public void setService(Service service) {
@@ -63,9 +63,7 @@ public class AdminController {
     }
     @GetMapping(value = "/user")
     public String takeUser(ModelMap model) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //UserDetails user = userDetailsService.loadUserByUsername(((User)principal).getUsername());
-        User user = service.findUserByUsername(userDetails.getUsername());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);
         return "user";
     }

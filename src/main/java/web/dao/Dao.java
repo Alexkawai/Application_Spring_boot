@@ -11,7 +11,6 @@ public interface Dao {
     void delete(Long id) ;
     List<User> allUsers() ;
     void edit(User user) ;
-    User findUserByUsername(String email);
 
     UserDetails loadUserByUsername(String email) ;
 }
